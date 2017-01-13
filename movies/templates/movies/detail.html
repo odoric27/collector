@@ -1,0 +1,8 @@
+<h3>{{ movie.title }}</h3>
+<li>Runtime: {{movie.runtime }} minutes</li>
+<li>Director: {{movie.director }}</li>
+{% if movie.status == 'O' %}
+	<li>Status: Owned</li>
+{% else %}
+	<li>Status: Wishlist</li>
+{% endif %}
