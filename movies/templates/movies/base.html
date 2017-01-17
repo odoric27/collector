@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'movies/style.css' %}" />
+
+<!DOCTYPE html>
+<html lan="en">	
+
+
+ <head><title>Collector</title></head>
+
+<body>
+<div class="container">
+  <div id="header">
+	  <nav>
+	    <a href="{% url 'movies:index' %}">Home</a> | 
+	    <a href="{% url 'movies:owned' %}">Owned</a> | 
+		<a href="{% url 'movies:wishlist' %}">Wish List</a>
+		<a href="{% url 'movies:addmovie' %}"><br>Add a movie</a>
+	  </nav> 
+	  <hr>
+  </div>
+  <div id="content">{% block content %}{% endblock %}</div>
+  <div id="footer"><hr>Collector - 2017</div>
+</div>
+
+</body>
+
+</html>

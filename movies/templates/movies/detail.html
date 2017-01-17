@@ -1,8 +1,14 @@
+{% extends "base.html" %} 
+{% block title %}This is the detail page{% endblock %}
+
+{% block content %}
+
 <h3>{{ movie.title }}</h3>
-<li>Runtime: {{movie.runtime }} minutes</li>
-<li>Director: {{movie.director }}</li>
-{% if movie.status == 'O' %}
-	<li>Status: Owned</li>
-{% else %}
-	<li>Status: Wishlist</li>
-{% endif %}
+<li>Genre: {{movie.get_genre_display}}</li>
+<li>Runtime: {{movie.runtime}} minutes</li>
+<li>Director: {{movie.director}}</li>
+<li>Released: {{movie.year}}</li>
+<li>Status: {{movie.get_status_display }}</li>
+<a href="{% url 'movies:editmovie' movie.id %}">Edit</a>
+<a href="{% url 'movies:deletemovie' movie.id %}">Delete</a>
+{% endblock %}

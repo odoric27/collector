@@ -1,4 +1,9 @@
-<h3> Movies Owned </h3>
+{% extends "base.html" %} 
+{% block title %}This is the owned page{% endblock %}
+
+
+{% block content %}
+<h3> Owned </h3>
 
 {% if movies %}
 	<ul>
@@ -11,3 +16,4 @@
 {% else %}
 	<p>Nothing here.</p>
 {% endif %}
+{% endblock %}

@@ -1,11 +1,11 @@
 {% extends "base.html" %} 
-{% block title %}This is the add movie page{% endblock %}
+{% block title %}This is the edit movie page{% endblock %}
 
 {% block content %}
 <form action='' method='POST'>
 {% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit"/>
+<p> Are you sure you want to delete {{movie.title}} ? </p>
+<input type="submit" value="Delete"/>
 <a href="{% url 'movies:index' %}">Cancel</a>
 </form>
 {% endblock %}

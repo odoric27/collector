@@ -35,11 +35,34 @@ class MoviesDetailView(DetailView):
 
 
 def add_movie(request):
-	form = MovieForm(request.POST)
-	if(form.is_valid()):
-		form.save();
-		return render(request, 'movies/index.html')
+	if(request.method == 'POST'):
+		form = MovieForm(request.POST)
+		if(form.is_valid()):
+			form.save()
+			return render(request, 'movies/index.html')
 	else:
-		return render(request, 'movies/addmovie.html', {'form' : form})
+		return render(request, 'movies/addmovie.html', {'form' : MovieForm()})
 
+def edit_movie(request, pk):
+	m = Movie.objects.get(pk=pk)
+	if(request.method == 'POST'):
+		form = MovieForm(request.POST, instance=m)
+		print("got here");
+		if(form.is_valid()):
+			print("and here")
+			form.save()
+			return render(request, 'movies/index.html')
+	else:
+		return render(request, 'movies/editmovie.html',
+			{'form' : MovieForm(instance=m)})
 
+def delete_movie(request, pk):
+	m = Movie.objects.get(pk=pk)
+	if(request.method == 'POST'):
+		m.delete()
+		return render(request, 'movies/index.html')
+		#return render(request, 'movies/index.html')
+	else:
+		#return HttpResponse("not deleted")
+		return render(request, 'movies/deletemovie.html',
+			{'movie' : m})

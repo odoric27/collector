@@ -3,34 +3,27 @@ from django.forms import ModelForm
 from django.core import validators
 
 # Create your models here.
-class Movie(models.Model):
-	action = 'A'
-	comedy = 'C'
-	drama = 'Dr'
-	fantasy = 'F'
-	horror = 'H'
-	scifi = 'S'
-	doc = 'Do'
-	GENRES = (
-		(action, 'Action'),
-		(comedy, 'Comedy'),
-		(drama, 'Drama'),
-		(fantasy, 'Fantasy'),
-		(horror, 'Horror'),
-		(scifi, 'Sci-Fi'),
-		(doc, 'Documentary'))
 
-	owned = 'O'
-	wishlist = 'W'
+class Movie(models.Model):
+	GENRES = (
+		('act', 'Action'),
+		('com', 'Comedy'),
+		('dra', 'Drama'),
+		('fan', 'Fantasy'),
+		('hor', 'Horror'),
+		('sci', 'Science Fiction'),
+		('doc', 'Documentary'),
+		('rom', 'Romance'))
+
 	STATUS = (
-		(owned, 'Owned'),
-		(wishlist, 'Wishlist'))
+		('O', 'Owned'),
+		('W', 'Wishlist'))
 
 	status = models.CharField(
 		max_length=1, 
 		choices=STATUS, 
 		null=False, 
-		default=owned)
+		default='O')
 	title = models.CharField(max_length=100)
 	runtime = models.PositiveIntegerField(default=0, blank=True)
 	director = models.CharField(
@@ -40,9 +33,15 @@ class Movie(models.Model):
 			regex=r'[A-Za-z]',
 			message="Illegal characters. Use letters only")])
 	genre = models.CharField(
-		max_length=10,
+		max_length=3,
 		blank=True,
 		choices=GENRES)
+	year = models.CharField(
+		max_length=4,
+		blank=True,
+		validators=[validators.RegexValidator(
+			regex=r'[0-9]',
+			message="Illegal characters. Use numbers only")])
 
 	def __str__(self):
 		return self.title
@@ -61,4 +60,5 @@ class MovieForm(ModelForm):
 		class Meta:
 			model = Movie
 			fields = ['status', 'title', 'runtime',
-					  'director', 'genre']
+					  'director', 'genre', 'year']
+			unique_together = ("title", "director", "year")

@@ -1,4 +1,6 @@
-<h2>My Movie Collection</h2>
-<li><a href="{% url 'movies:owned' %}">Owned</a></li>
-<li><a href="{% url 'movies:wishlist' %}">Wish List</a></li>
-<p><a href="{% url 'movies:addmovie' %}"><br>Add a movie</a></p>
+{% extends "base.html" %} 
+{% block title %}This is the index page{% endblock %}
+
+{% block content %}
+<p>Home Page<br>content tbd</p>
+{% endblock %}
