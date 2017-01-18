@@ -8,9 +8,24 @@ from .models import Movie, MovieForm
 
 # Create your views here.
 
-
 class IndexView(ListView):
 	template_name = 'movies/index.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(IndexView, self).get_context_data(**kwargs)
+		owned = Movie.objects.filter(status='O')
+		count = len(owned)
+		genre_list = {}
+		for movie in owned:
+			g = movie.get_genre_display()
+			if(g in genre_list):
+				genre_list[g] = genre_list[g] + 1
+			else:
+				genre_list[g] = 1
+
+		context['count'] = count
+		context['genres'] = genre_list
+		return context
 
 	def get_queryset(self):
 		return

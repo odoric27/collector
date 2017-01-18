@@ -2,5 +2,17 @@
 {% block title %}This is the index page{% endblock %}
 
 {% block content %}
-<p>Home Page<br>content tbd</p>
+<p>More Coming Soon...</p>
+<div id="stats">
+	<h3>Collection Stats</h3>
+		<p>Total Movies: {{ count }}<br>
+			<ul>
+			{% for key, value in genres.items %}
+				{{ key }}: {{ value }}<br>
+			{% endfor %}
+			</ul>
+		</p>
+</div>
+ <p>Browse by... Name, Director, Genre, Year, etc </p>
+
 {% endblock %}
