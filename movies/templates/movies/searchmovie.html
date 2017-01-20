@@ -6,9 +6,9 @@
 {% if not_found %}
 	Could not find {{ not_found }}
 {% elif found.status == "O" %}
-	You own {{ found }}
+	You own <a href="{% url 'movies:detail' found.id %}">{{found.title}}</a>
 {% else %}
-	{{ found }} is on your Wishlist
+	<a href="{% url 'movies:detail' found.id %}">{{found.title}}</a> is on your Wishlist
 {% endif %}
 
 {% endblock %}
