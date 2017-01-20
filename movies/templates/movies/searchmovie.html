@@ -1,0 +1,14 @@
+{% extends "base.html" %} 
+{% block title %}This is the search movie page{% endblock %}
+
+{% block content %}
+
+{% if not_found %}
+	Could not find {{ not_found }}
+{% elif found.status == "O" %}
+	You own {{ found }}
+{% else %}
+	{{ found }} is on your Wishlist
+{% endif %}
+
+{% endblock %}

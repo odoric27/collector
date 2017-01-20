@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Movie, MovieForm
+from .models import Movie, MovieForm, SearchForm
 
 # Create your views here.
 
@@ -54,7 +54,7 @@ def add_movie(request):
 		form = MovieForm(request.POST)
 		if(form.is_valid()):
 			form.save()
-			return render(request, 'movies/index.html')
+			return HttpResponseRedirect(reverse('movies:index'))
 	else:
 		return render(request, 'movies/addmovie.html', {'form' : MovieForm()})
 
@@ -62,11 +62,9 @@ def edit_movie(request, pk):
 	m = Movie.objects.get(pk=pk)
 	if(request.method == 'POST'):
 		form = MovieForm(request.POST, instance=m)
-		print("got here");
 		if(form.is_valid()):
-			print("and here")
 			form.save()
-			return render(request, 'movies/index.html')
+			return HttpResponseRedirect(reverse('movies:index'))
 	else:
 		return render(request, 'movies/editmovie.html',
 			{'form' : MovieForm(instance=m)})
@@ -75,9 +73,19 @@ def delete_movie(request, pk):
 	m = Movie.objects.get(pk=pk)
 	if(request.method == 'POST'):
 		m.delete()
-		return render(request, 'movies/index.html')
+		return HttpResponseRedirect(reverse('movies:index'))
 		#return render(request, 'movies/index.html')
 	else:
 		#return HttpResponse("not deleted")
-		return render(request, 'movies/deletemovie.html',
-			{'movie' : m})
+		return render(request, 'movies/deletemovie.html', {'movie' : m})
+
+def search_movie(request):
+	if('search_query' in request.GET):
+		title = request.GET['search_query']
+		try:
+			movie = Movie.objects.get(title=title)
+		except Movie.DoesNotExist:
+			return render(request, 'movies/searchmovie.html', {'not_found' : title})
+
+		return render(request, 'movies/searchmovie.html', {'found' : movie})
+	#return render(request, 'movies/searchmovie.html')

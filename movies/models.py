@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django import forms
 from django.core import validators
 
 # Create your models here.
@@ -13,8 +13,8 @@ class Movie(models.Model):
 		('hor', 'Horror'),
 		('sci', 'Science Fiction'),
 		('doc', 'Documentary'),
-		('rom', 'Romance'))
-
+		('rom', 'Romance'),
+		('unk', 'Unknown'))
 	STATUS = (
 		('O', 'Owned'),
 		('W', 'Wishlist'))
@@ -34,7 +34,8 @@ class Movie(models.Model):
 			message="Illegal characters. Use letters only")])
 	genre = models.CharField(
 		max_length=3,
-		blank=True,
+		blank=False,
+		default='unk',
 		choices=GENRES)
 	year = models.CharField(
 		max_length=4,
@@ -45,20 +46,15 @@ class Movie(models.Model):
 
 	def __str__(self):
 		return self.title
-'''
-class MovieForm(forms.Form):
-	owned = forms.BooleanField()
-	wishlist = forms.BooleanField()
-	title = forms.CharField(max_length=100)
-	runtime = forms.IntegerField()
-	director_first_name = forms.CharField(max_length=30)
-	director_last_name = forms.CharField(max_length=30)
-	genre = forms.CharField(max_length=10)
-'''
 
-class MovieForm(ModelForm):
+class MovieForm(forms.ModelForm):
 		class Meta:
 			model = Movie
 			fields = ['status', 'title', 'runtime',
 					  'director', 'genre', 'year']
 			unique_together = ("title", "director", "year")
+
+class SearchForm(forms.Form):
+	search_query = forms.CharField(
+		max_length=100,
+		help_text='Enter movie title')
