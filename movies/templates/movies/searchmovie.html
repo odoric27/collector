@@ -5,10 +5,18 @@
 
 {% if not_found %}
 	Could not find {{ not_found }}
-{% elif found.status == "O" %}
-	You own <a href="{% url 'movies:detail' found.id %}">{{found.title}}</a>
+{% elif found %}
+	{% if found.status == "O" %}
+		You own <a href="{% url 'movies:detail' found.id %}">{{found.title}}</a>
+	{% else %}
+		<a href="{% url 'movies:detail' found.id %}">{{found.title}}</a> is on your Wishlist
+	{% endif %}
 {% else %}
-	<a href="{% url 'movies:detail' found.id %}">{{found.title}}</a> is on your Wishlist
+	Couldn't find "{{ query }}"<br><br>
+	Did you mean...<br>
+	{% for part in partial %}
+		<a href="{% url 'movies:detail' part.id %}">{{part.title}}</a><br>
+	{% endfor %}
 {% endif %}
 
 {% endblock %}

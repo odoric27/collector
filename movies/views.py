@@ -89,11 +89,18 @@ def delete_movie(request, pk):
 
 def search_movie(request):
 	title = request.GET['search_query']
+	close = None
 	if(title == ""):
 		title = "[blank]";
 	try:
-		movie = Movie.objects.get(title=title)
+		movie = Movie.objects.get(title__iexact=title)
 	except Movie.DoesNotExist:
-		return render(request, 'movies/searchmovie.html', {'not_found' : title})
+		close = Movie.objects.filter(title__icontains=title)
+		if(not close):
+			return render(request, 'movies/searchmovie.html', {'not_found' : title})
 
-	return render(request, 'movies/searchmovie.html', {'found' : movie})
+	if(close == None):
+		return render(request, 'movies/searchmovie.html', {'found' : movie})
+	else:
+		return render(request, 'movies/searchmovie.html',
+			{'partial' : close, 'query' : title})
