@@ -2,13 +2,11 @@
 {% block title %}This is the genre detail page{% endblock %}
 
 {% block content %}
-<h3> Browse by Genres </h3>
+<h3> Browse {{genre}} </h3>
 
 {% if movies %}
 	{% for movie in movies %}
 		<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a>
-		<i>{{movie.get_genre_display}}</i><br>
-
 	{% endfor %}
 {% else %}
 	<p>Nothing here.</p>

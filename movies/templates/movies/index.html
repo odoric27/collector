@@ -2,16 +2,15 @@
 {% block title %}This is the index page{% endblock %}
 
 {% block content %}
-<p>More Coming Soon...</p>
 <div id="stats">
 	<h3>Collection Stats</h3>
 		<p>Total Owned: {{ count }}<br><br>
-			<a href="{% url 'movies:genredetail' %}">Browse by Genre:</a><br>
+			Browse by Genre:<br>
 			{% for key, value in genres.items %}
-			{{ key }} : {{ value }}<br>
+				<a href="{% url 'movies:genredetail' key %}">{{ key }}</a> : 
+				{{ value }}<br>
 			{% endfor %}
 		</p>
 </div>
- <p>Notes: add link to each genre for detail view of movies in that genre</p>
 
 {% endblock %}

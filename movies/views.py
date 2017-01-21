@@ -49,8 +49,21 @@ class MoviesOwnedGenreView(ListView):
 	context_object_name = 'movies'
 	template_name = 'movies/genredetail.html'
 
+	def get_context_data(self, **kwargs):
+		context = super(MoviesOwnedGenreView, self).get_context_data(**kwargs)
+		context.update({'genre': self.kwargs['genre']})
+		return context
+
 	def get_queryset(self):
-		return Movie.objects.order_by('genre', 'title')
+		genre = self.kwargs['genre']
+		print("genre: " + genre)
+		for g in Movie.GENRES:
+			print(g[1])
+			if(g[1] == genre):
+				genre = g[0];
+				print(genre)
+				break;
+		return Movie.objects.filter(genre=genre).order_by('title')
 
 class MoviesDetailView(DetailView):
 	model = Movie
