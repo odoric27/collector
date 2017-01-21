@@ -30,7 +30,7 @@ class Movie(models.Model):
 		max_length=50,
 		blank=True,
 		validators=[validators.RegexValidator(
-			regex=r'[A-Za-z]',
+			regex=r'[A-Za-z ]+$',
 			message="Illegal characters. Use letters only")])
 	genre = models.CharField(
 		max_length=3,
@@ -41,7 +41,7 @@ class Movie(models.Model):
 		max_length=4,
 		blank=True,
 		validators=[validators.RegexValidator(
-			regex=r'[0-9]',
+			regex=r'[0-9]{4}',
 			message="Illegal characters. Use numbers only")])
 
 	def __str__(self):

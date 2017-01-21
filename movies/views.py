@@ -58,10 +58,8 @@ class MoviesOwnedGenreView(ListView):
 		genre = self.kwargs['genre']
 		print("genre: " + genre)
 		for g in Movie.GENRES:
-			print(g[1])
 			if(g[1] == genre):
 				genre = g[0];
-				print(genre)
 				break;
 		return Movie.objects.filter(genre=genre).order_by('title')
 
@@ -71,33 +69,33 @@ class MoviesDetailView(DetailView):
 
 
 def add_movie(request):
+	form = MovieForm()
 	if(request.method == 'POST'):
 		form = MovieForm(request.POST)
 		if(form.is_valid()):
 			form.save()
 			return HttpResponseRedirect(reverse('movies:index'))
-	else:
-		return render(request, 'movies/addmovie.html', {'form' : MovieForm()})
+		
+	return render(request, 'movies/addmovie.html', {'form' : form})
 
 def edit_movie(request, pk):
 	m = Movie.objects.get(pk=pk)
+	form = MovieForm(instance=m)
 	if(request.method == 'POST'):
-		form = MovieForm(request.POST, instance=m)
+		form = MovieForm(request.POST)
 		if(form.is_valid()):
+			m.delete()
 			form.save()
 			return HttpResponseRedirect(reverse('movies:index'))
-	else:
-		return render(request, 'movies/editmovie.html',
-			{'form' : MovieForm(instance=m)})
+	
+	return render(request, 'movies/editmovie.html', {'form' : form})
 
 def delete_movie(request, pk):
 	m = Movie.objects.get(pk=pk)
 	if(request.method == 'POST'):
 		m.delete()
 		return HttpResponseRedirect(reverse('movies:index'))
-		#return render(request, 'movies/index.html')
 	else:
-		#return HttpResponse("not deleted")
 		return render(request, 'movies/deletemovie.html', {'movie' : m})
 
 def search_movie(request):

@@ -9,16 +9,16 @@
  <head><title>Collector</title></head>
 
 <body>
-<div class="container">
+<div id="container">
   <div id="header">
 	  <nav>
 	    <a href="{% url 'movies:index' %}">Home</a> | 
 	    <a href="{% url 'movies:owned' %}">Owned</a> | 
 		<a href="{% url 'movies:wishlist' %}">Wish List</a>
-		<a href="{% url 'movies:addmovie' %}"><br>Add</a> |
-		<form action="{% url 'movies:searchmovie' %}" method='get'>
-			<input type="text" name="search_query" placeholder="Enter movie title">
-			<input type="submit" value="Find">
+		<a href="{% url 'movies:addmovie' %}"><br>Add to your collection</a>
+		<form action="{% url 'movies:searchmovie' %}" method='GET'>
+			<input type="text" name="search_query" placeholder="Search your collection">
+			<input type="submit" value="Search">
 		</form>
 	  </nav> 
 	  <hr>

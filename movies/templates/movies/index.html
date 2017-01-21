@@ -2,15 +2,28 @@
 {% block title %}This is the index page{% endblock %}
 
 {% block content %}
-<div id="stats">
-	<h3>Collection Stats</h3>
-		<p>Total Owned: {{ count }}<br><br>
-			Browse by Genre:<br>
-			{% for key, value in genres.items %}
-				<a href="{% url 'movies:genredetail' key %}">{{ key }}</a> : 
-				{{ value }}<br>
-			{% endfor %}
-		</p>
+
+<h3>Collection Stats</h3>
+<p>Total Owned: {{ count }}<p>
+<div id="stats" style="margin:0px auto; width:100%">
+	<div id="genre" style="float:left; margin:0; width:25%;">
+	<p>Browse by Genre:<br>
+		{% for key, value in genres.items %}
+			<a href="{% url 'movies:genredetail' key %}">{{ key }}</a> : 
+			{{ value }}<br>
+		{% endfor %}
+	</p>
+	</div>
+	<div id="director" style="float:left; margin:0; width:25%;">
+	<p>Browse by Director</p>
+	</div>
+	<div id="year" style="float:left; margin:0; width:25%;">
+	<p>Browse by Year</p>
+	</div>
+	<div id="other" style="float:left; margin:0; width:25%;">
+	<p>Browse by... something else</p>
+	</div>
 </div>
 
 {% endblock %}
+
