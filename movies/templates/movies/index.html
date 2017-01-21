@@ -5,14 +5,13 @@
 <p>More Coming Soon...</p>
 <div id="stats">
 	<h3>Collection Stats</h3>
-		<p>Total Movies: {{ count }}<br>
-			<ul>
+		<p>Total Owned: {{ count }}<br><br>
+			<a href="{% url 'movies:genredetail' %}">Browse by Genre:</a><br>
 			{% for key, value in genres.items %}
-				{{ key }}: {{ value }}<br>
+			{{ key }} : {{ value }}<br>
 			{% endfor %}
-			</ul>
 		</p>
 </div>
- <p>Browse by... Name, Director, Genre, Year, etc </p>
+ <p>Notes: add link to each genre for detail view of movies in that genre</p>
 
 {% endblock %}

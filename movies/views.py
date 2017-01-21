@@ -15,16 +15,17 @@ class IndexView(ListView):
 		context = super(IndexView, self).get_context_data(**kwargs)
 		owned = Movie.objects.filter(status='O')
 		count = len(owned)
-		genre_list = {}
+		genre_list = [x[1] for x in Movie.GENRES]
+		genre_dict = {}
+		for genre in genre_list:
+			genre_dict[genre] = 0
+
 		for movie in owned:
 			g = movie.get_genre_display()
-			if(g in genre_list):
-				genre_list[g] = genre_list[g] + 1
-			else:
-				genre_list[g] = 1
+			genre_dict[g] = genre_dict[g] + 1
 
 		context['count'] = count
-		context['genres'] = genre_list
+		context['genres'] = genre_dict
 		return context
 
 	def get_queryset(self):
@@ -35,14 +36,21 @@ class MoviesWishListView(ListView):
 	template_name = 'movies/wishlist.html'
 
 	def get_queryset(self):
-		return Movie.objects.order_by('title')
+		return Movie.objects.filter(status="W").order_by('title')
 
 class MoviesOwnedView(ListView):
 	context_object_name = 'movies'
 	template_name = 'movies/owned.html'
 
 	def get_queryset(self):
-		return Movie.objects.order_by('title')
+		return Movie.objects.filter(status="O").order_by('title')
+
+class MoviesOwnedGenreView(ListView):
+	context_object_name = 'movies'
+	template_name = 'movies/genredetail.html'
+
+	def get_queryset(self):
+		return Movie.objects.order_by('genre', 'title')
 
 class MoviesDetailView(DetailView):
 	model = Movie
@@ -80,12 +88,12 @@ def delete_movie(request, pk):
 		return render(request, 'movies/deletemovie.html', {'movie' : m})
 
 def search_movie(request):
-	if('search_query' in request.GET):
-		title = request.GET['search_query']
-		try:
-			movie = Movie.objects.get(title=title)
-		except Movie.DoesNotExist:
-			return render(request, 'movies/searchmovie.html', {'not_found' : title})
+	title = request.GET['search_query']
+	if(title == ""):
+		title = "[blank]";
+	try:
+		movie = Movie.objects.get(title=title)
+	except Movie.DoesNotExist:
+		return render(request, 'movies/searchmovie.html', {'not_found' : title})
 
-		return render(request, 'movies/searchmovie.html', {'found' : movie})
-	#return render(request, 'movies/searchmovie.html')
+	return render(request, 'movies/searchmovie.html', {'found' : movie})

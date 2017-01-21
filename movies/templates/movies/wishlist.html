@@ -5,13 +5,9 @@
 <h3>Wish List</h3>
 
 {% if movies %}
-	<ul>
 	{% for movie in movies %}
-		{% if movie.status == "W" %}
-			<li><a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a></li>
-		{% endif %}
+		<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a><br>
 	{% endfor %}
-	</ul>
 {% else %}
 	<p>Nothing here.</p>
 {% endif %}

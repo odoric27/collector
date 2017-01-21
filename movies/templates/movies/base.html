@@ -17,7 +17,7 @@
 		<a href="{% url 'movies:wishlist' %}">Wish List</a>
 		<a href="{% url 'movies:addmovie' %}"><br>Add</a> |
 		<form action="{% url 'movies:searchmovie' %}" method='get'>
-			Search<input type="text" name="search_query" placeholder="Enter movie title">
+			<input type="text" name="search_query" placeholder="Enter movie title">
 			<input type="submit" value="Find">
 		</form>
 	  </nav> 
