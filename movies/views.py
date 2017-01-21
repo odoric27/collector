@@ -13,14 +13,14 @@ class IndexView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(IndexView, self).get_context_data(**kwargs)
-		owned = Movie.objects.filter(status='O')
-		count = len(owned)
+		movies = Movie.objects.all()
+		count = len(movies)
 		genre_list = [x[1] for x in Movie.GENRES]
 		genre_dict = {}
 		for genre in genre_list:
 			genre_dict[genre] = 0
 
-		for movie in owned:
+		for movie in movies:
 			g = movie.get_genre_display()
 			genre_dict[g] = genre_dict[g] + 1
 
@@ -38,9 +38,16 @@ class MoviesWishListView(ListView):
 	def get_queryset(self):
 		return Movie.objects.filter(status="W").order_by('title')
 
-class MoviesOwnedView(ListView):
+class MoviesOwnedCoverView(ListView):
 	context_object_name = 'movies'
-	template_name = 'movies/owned.html'
+	template_name = 'movies/owned-cover.html'
+
+	def get_queryset(self):
+		return Movie.objects.filter(status="O").order_by('title')
+
+class MoviesOwnedListView(ListView):
+	context_object_name = 'movies'
+	template_name = 'movies/owned-list.html'
 
 	def get_queryset(self):
 		return Movie.objects.filter(status="O").order_by('title')
@@ -71,7 +78,7 @@ class MoviesDetailView(DetailView):
 def add_movie(request):
 	form = MovieForm()
 	if(request.method == 'POST'):
-		form = MovieForm(request.POST)
+		form = MovieForm(request.POST, request.FILES)
 		if(form.is_valid()):
 			form.save()
 			return HttpResponseRedirect(reverse('movies:index'))
@@ -82,10 +89,10 @@ def edit_movie(request, pk):
 	m = Movie.objects.get(pk=pk)
 	form = MovieForm(instance=m)
 	if(request.method == 'POST'):
-		form = MovieForm(request.POST)
+		form = MovieForm(request.POST, request.FILES)
 		if(form.is_valid()):
-			m.delete()
 			form.save()
+			m.delete()
 			return HttpResponseRedirect(reverse('movies:index'))
 	
 	return render(request, 'movies/editmovie.html', {'form' : form})

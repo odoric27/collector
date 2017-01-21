@@ -13,7 +13,7 @@
   <div id="header">
 	  <nav>
 	    <a href="{% url 'movies:index' %}">Home</a> | 
-	    <a href="{% url 'movies:owned' %}">Owned</a> | 
+	    <a href="{% url 'movies:owned-cover' %}">Owned</a> | 
 		<a href="{% url 'movies:wishlist' %}">Wish List</a>
 		<a href="{% url 'movies:addmovie' %}"><br>Add to your collection</a>
 		<form action="{% url 'movies:searchmovie' %}" method='GET'>

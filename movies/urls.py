@@ -7,7 +7,8 @@ from . import views
 app_name = 'movies'
 urlpatterns = [
 	url(r'^$', views.IndexView.as_view(), name='index'),
-    url('owned/$', views.MoviesOwnedView.as_view(), name='owned'),
+    url('owned-cover/$', views.MoviesOwnedCoverView.as_view(), name='owned-cover'),
+    url('owned-list/$', views.MoviesOwnedListView.as_view(), name='owned-list'),
     url('wishlist/$', views.MoviesWishListView.as_view(), name='wishlist'),
     url(r'^(?P<pk>[0-9]+)/$', views.MoviesDetailView.as_view(), name='detail'),
     url('addmovie/$', views.add_movie, name='addmovie'),

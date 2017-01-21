@@ -4,11 +4,14 @@
 {% block content %}
 
 <h3>{{ movie.title }}</h3>
-<li>Genre: {{movie.get_genre_display}}</li>
-<li>Runtime: {{movie.runtime}} minutes</li>
-<li>Director: {{movie.director}}</li>
-<li>Released: {{movie.year}}</li>
-<li>Status: {{movie.get_status_display }}</li>
-<a href="{% url 'movies:editmovie' movie.id %}">Edit</a>
-<a href="{% url 'movies:deletemovie' movie.id %}">Delete</a>
+<img src="/movies{{ movie.cover.medium.url }}" />
+<div id="details" style="float:right; margin:0; width:65%;">
+	Genre: {{movie.get_genre_display}}<br>
+	Runtime: {{movie.runtime}} minutes<br>
+	Director: {{movie.director}}<br>
+	Released: {{movie.year}}<br>
+	Status: {{movie.get_status_display }}<br>
+	<a href="{% url 'movies:editmovie' movie.id %}">Edit</a>
+	<a href="{% url 'movies:deletemovie' movie.id %}">Delete</a>
+</div>
 {% endblock %}

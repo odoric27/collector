@@ -2,9 +2,13 @@ from django.db import models
 from django import forms
 from django.core import validators
 
+from stdimage.models import StdImageField
+from stdimage.utils import UploadToAutoSlug
+
 # Create your models here.
 
 class Movie(models.Model):
+
 	GENRES = (
 		('act', 'Action'),
 		('com', 'Comedy'),
@@ -43,6 +47,11 @@ class Movie(models.Model):
 		validators=[validators.RegexValidator(
 			regex=r'[0-9]{4}',
 			message="Illegal characters. Use numbers only")])
+	cover = StdImageField(
+		upload_to=UploadToAutoSlug(populate_from='title'),
+		blank=True,
+		variations={'thumbnail': (100, 166, True),
+					'medium': (300, 500)})
 
 	def __str__(self):
 		return self.title
@@ -51,7 +60,7 @@ class MovieForm(forms.ModelForm):
 		class Meta:
 			model = Movie
 			fields = ['status', 'title', 'runtime',
-					  'director', 'genre', 'year']
+					  'director', 'genre', 'year', 'cover']
 			unique_together = ("title", "director", "year")
 
 class SearchForm(forms.Form):

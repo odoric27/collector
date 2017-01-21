@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['0.0.0.0',
 
 INSTALLED_APPS = [
     'movies.apps.MoviesConfig',
+    'stdimage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,5 +125,4 @@ STATIC_URL = '/static/'
 
 # Media Files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'movies/media')
-
 MEDIA_URL = '/media/'

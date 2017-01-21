@@ -3,8 +3,11 @@
 
 
 {% block content %}
-<h3> Owned </h3>
-
+<h3> Owned
+	<font size="2">
+		<a href="{% url 'movies:owned-cover' %}"><i>Cover View</i></a>
+	</font>
+</h3>
 {% if movies %}
 	{% for movie in movies %}
 		<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a><br>
