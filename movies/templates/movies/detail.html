@@ -1,10 +1,15 @@
 {% extends "base.html" %} 
 {% block title %}This is the detail page{% endblock %}
+{% load static %}
 
 {% block content %}
 
 <h3>{{ movie.title }}</h3>
-<img src="/movies{{ movie.cover.medium.url }}" />
+{% if movie.cover.medium.url %} 
+	<img src="/movies{{ movie.cover.medium.url }}" />
+{% else %}
+	<img src="{% static 'movies/images/missing.medium.jpeg' %}"/></a>
+{% endif %}
 <div id="details" style="float:right; margin:0; width:65%;">
 	Genre: {{movie.get_genre_display}}<br>
 	Runtime: {{movie.runtime}} minutes<br>

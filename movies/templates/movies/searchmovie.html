@@ -4,7 +4,9 @@
 {% block content %}
 
 {% if not_found %}
-	Could not find {{ not_found }}
+	Could not find {{ not_found }}<br><br>
+	Do you want to <a href="{% url 'movies:addfromsearch' not_found %}">add</a> it to your collection?
+
 {% elif found %}
 	{% if found.status == "O" %}
 		You own <a href="{% url 'movies:detail' found.id %}">{{found.title}}</a>

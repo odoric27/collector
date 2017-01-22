@@ -1,6 +1,5 @@
 {% extends "base.html" %} 
-{% block title %}This is the owned page{% endblock %}
-
+{% block title %}This is the owned list page{% endblock %}
 
 {% block content %}
 <h3> Owned
@@ -8,6 +7,7 @@
 		<a href="{% url 'movies:owned-cover' %}"><i>Cover View</i></a>
 	</font>
 </h3>
+
 {% if movies %}
 	{% for movie in movies %}
 		<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a><br>

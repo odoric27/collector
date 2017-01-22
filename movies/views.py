@@ -3,8 +3,10 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-
 from .models import Movie, MovieForm, SearchForm
+from django.conf import settings
+
+import os
 
 # Create your views here.
 
@@ -34,6 +36,13 @@ class IndexView(ListView):
 class MoviesWishListView(ListView):
 	context_object_name = 'movies'
 	template_name = 'movies/wishlist.html'
+
+	def get_queryset(self):
+		return Movie.objects.filter(status="W").order_by('title')
+
+class MoviesWishListCoverView(ListView):
+	context_object_name = 'movies'
+	template_name = 'movies/wishlist-cover.html'
 
 	def get_queryset(self):
 		return Movie.objects.filter(status="W").order_by('title')
@@ -75,6 +84,16 @@ class MoviesDetailView(DetailView):
 	template_name = 'movies/detail.html'
 
 
+def add_from_search(request, title):
+	form = MovieForm({'title':title, 'status':'O', 'genre':'unk', 'runtime':0})
+	if(request.method == 'POST'):
+		form = MovieForm(request.POST, request.FILES)
+		if(form.is_valid()):
+			form.save()
+			return HttpResponseRedirect(reverse('movies:index'))
+		
+	return render(request, 'movies/addmovie.html', {'form' : form})
+
 def add_movie(request):
 	form = MovieForm()
 	if(request.method == 'POST'):
@@ -101,6 +120,19 @@ def delete_movie(request, pk):
 	m = Movie.objects.get(pk=pk)
 	if(request.method == 'POST'):
 		m.delete()
+		try:
+			#if movie has images, delete them
+			orig = m.cover.url
+			med = m.cover.medium.url
+			thumb = m.cover.thumbnail.url
+			orig_path = settings.MEDIA_ROOT + orig[6:]
+			med_path = settings.MEDIA_ROOT + med[6:]
+			thumb_path = settings.MEDIA_ROOT + thumb[6:]
+			os.remove(orig_path)
+			os.remove(med_path)
+			os.remove(thumb_path)
+		except ValueError:
+			pass
 		return HttpResponseRedirect(reverse('movies:index'))
 	else:
 		return render(request, 'movies/deletemovie.html', {'movie' : m})

@@ -1,16 +1,16 @@
 {% extends "base.html" %} 
-{% block title %}This is the owned cover page{% endblock %}
+{% block title %}This is the wishlist cover page{% endblock %}
 {% load static %}
 
 {% block content %}
-<h3> Owned
+<h3> Wish List
 	<font size="2">
-		<a href="{% url 'movies:owned-list' %}"><i>List View</i></a>
+		<a href="{% url 'movies:wishlist' %}"><i>List View</i></a>
 	</font>
 </h3>
 {% if movies %}
 	{% for movie in movies %}
-		<a href="{% url 'movies:detail' movie.id %}" title="{{movie.title}}">
+		<a href="{% url 'movies:detail' movie.id %}" title="{{movie.title}}">>
 		{% if movie.cover.thumbnail.url %}
 			<img src="/movies{{ movie.cover.thumbnail.url }}"/></a>
 		{% else %}
