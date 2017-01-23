@@ -10,11 +10,11 @@
 </h3>
 {% if movies %}
 	{% for movie in movies %}
-		<a href="{% url 'movies:detail' movie.id %}" title="{{movie.title}}">>
+		<a href="{% url 'movies:detail' movie.id %}" title="{{movie.title}}">
 		{% if movie.cover.thumbnail.url %}
-			<img src="/movies{{ movie.cover.thumbnail.url }}"/></a>
+			<img src="/movies{{ movie.cover.thumbnail.url }}"></a>
 		{% else %}
-			<img src="{% static 'movies/images/missing.thumbnail.jpeg' %}"/></a>
+			<img src="{% static 'movies/images/missing.thumbnail.jpeg' %}"></a>
 		{% endif %}
 	{% endfor %}
 {% else %}

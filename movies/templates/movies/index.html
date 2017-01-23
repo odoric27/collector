@@ -4,24 +4,23 @@
 {% block content %}
 
 <h3>Collection Stats</h3>
-<p>Movie Count: {{ count }}<p>
-<div id="stats" style="margin:0px auto; width:100%">
-	<div id="genre" style="float:left; margin:0; width:25%;">
+Movie Count: {{ count }}<br>
+{% for rec in recent %}
+	<a href="{% url 'movies:detail' rec.id %}">{{rec.title}}</a>
+{% endfor %}
+<div id="stats" style="margin:0px auto; width:100%;">
+	<div id="category">
 		<h4>Browse by Genre:</h4>
 			{% for key, value in genres.items %}
 				<a href="{% url 'movies:genredetail' key %}">{{ key }}</a> : 
 				{{ value }}<br>
 			{% endfor %}
 	</div>
-	<div id="director" style="float:left; margin:0; width:25%;">
+	<div id="category">
 		<h4>Browse by Director</h4>
-		
 	</div>
-	<div id="year" style="float:left; margin:0; width:25%;">
+	<div id="category">
 		<h4>Browse by Year</h4>
-	</div>
-	<div id="other" style="float:left; margin:0; width:25%;">
-		<h4>Browse by... something else</h4>
 	</div>
 </div>
 

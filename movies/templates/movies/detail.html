@@ -10,12 +10,13 @@
 {% else %}
 	<img src="{% static 'movies/images/missing.medium.jpeg' %}"/></a>
 {% endif %}
-<div id="details" style="float:right; margin:0; width:65%;">
+<div id="details" style="float:right; margin:0; width:100%;">
 	Genre: {{movie.get_genre_display}}<br>
 	Runtime: {{movie.runtime}} minutes<br>
 	Director: {{movie.director}}<br>
 	Released: {{movie.year}}<br>
-	Status: {{movie.get_status_display }}<br>
+	Status: {{movie.get_status_display}}<br>
+	Date Added: {{movie.date_added}}<br>
 	<a href="{% url 'movies:editmovie' movie.id %}">Edit</a>
 	<a href="{% url 'movies:deletemovie' movie.id %}">Delete</a>
 </div>

@@ -11,20 +11,22 @@
 <body>
 <div id="container">
   <div id="header">
-	  <nav>
-	    <a href="{% url 'movies:index' %}">Home</a> | 
-	    <a href="{% url 'movies:owned-cover' %}">Owned</a> | 
-		<a href="{% url 'movies:wishlist-cover' %}">Wish List</a>
-		<a href="{% url 'movies:addmovie' %}"><br>Add to your collection</a>
-		<form action="{% url 'movies:searchmovie' %}" method='GET'>
-			<input type="text" name="search_query" placeholder="Search your collection">
-			<input type="submit" value="Search">
-		</form>
-	  </nav> 
-	  <hr>
+	  <ul>
+	    <li><a href="{% url 'movies:index' %}">Home</a></li>
+	    <li><a href="{% url 'movies:owned-cover' %}">Owned</a></li>
+		<li><a href="{% url 'movies:wishlist-cover' %}">Wish List</a></li>
+		<li><a href="{% url 'movies:addmovie' %}">Add</a></li>
+		
+		<li><form action="{% url 'movies:searchmovie' %}" method='GET'>
+				<input type="text" name="search_query" placeholder="Search your collection">
+				<input type="submit" value="Search">
+			</form>
+		</li>
+		
+	  </ul>
   </div>
   <div id="content">{% block content %}{% endblock %}</div>
-  <div id="footer"><hr>Collector - 2017</div>
+  <div id="footer">Collector - 2017</div>
 </div>
 
 </body>

@@ -1,7 +1,6 @@
 from django.db import models
 from django import forms
 from django.core import validators
-
 from stdimage.models import StdImageField
 from stdimage.utils import UploadToAutoSlug
 
@@ -60,7 +59,8 @@ class MovieForm(forms.ModelForm):
 		class Meta:
 			model = Movie
 			fields = ['status', 'title', 'runtime',
-					  'director', 'genre', 'year', 'cover']
+					  'director', 'genre', 'year',
+					  'cover']
 			unique_together = ("title", "director", "year")
 
 class SearchForm(forms.Form):

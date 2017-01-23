@@ -85,7 +85,10 @@ class MoviesDetailView(DetailView):
 
 
 def add_from_search(request, title):
-	form = MovieForm({'title':title, 'status':'O', 'genre':'unk', 'runtime':0})
+	now = timezone.localtime(timezone.now())
+	form = MovieForm({'title':title, 'status':'O',
+					  'genre':'unk', 'runtime':0,
+					  'date_added':now})
 	if(request.method == 'POST'):
 		form = MovieForm(request.POST, request.FILES)
 		if(form.is_valid()):
